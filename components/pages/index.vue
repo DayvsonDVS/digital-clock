@@ -1,32 +1,19 @@
 <template>
   <div id="time">
-    <div class="circle" style="--clr: #ff2972">
-      <div class="dots hr_dot"></div>
+    <div
+      v-for="{ time, color, dot, id } in list"
+      class="circle"
+      :style="`--clr: ${color}`"
+    >
+      <div :class="`dots ${dot}`"></div>
       <svg>
         <circle cx="70" cy="70" r="70"></circle>
-        <circle cx="70" cy="70" r="70" id="hh"></circle>
+        <circle cx="70" cy="70" r="70" :id="id"></circle>
       </svg>
 
-      <div ref="hours"></div>
+      <div :id="time"></div>
     </div>
-    <div class="circle" style="--clr: #fee800">
-      <div class="dots min_dot"></div>
-      <svg>
-        <circle cx="70" cy="70" r="70"></circle>
-        <circle cx="70" cy="70" r="70" id="mm"></circle>
-      </svg>
 
-      <div ref="minutes">00</div>
-    </div>
-    <div class="circle" style="--clr: #04fc43">
-      <div class="dots sec_dot"></div>
-      <svg>
-        <circle cx="70" cy="70" r="70"></circle>
-        <circle cx="70" cy="70" r="70" id="ss"></circle>
-      </svg>
-
-      <div ref="seconds">00</div>
-    </div>
     <div class="ap">
       <div ref="ampm">AM</div>
     </div>
@@ -36,20 +23,20 @@
 <script setup lang="ts">
 import 'assets/scss/main.scss'
 
-const hours = ref<HTMLElement>()
-const minutes = ref<HTMLElement>()
-const seconds = ref<HTMLElement>()
 const ampm = ref<HTMLElement>()
 
 const list = [
-  { time: 'hours', color: '#ff2972', id: 'hh' },
-  { time: 'minutes', color: '#fee800', id: 'mm' },
-  { time: 'seconds', color: '#04fc43', id: 'ss' },
-  { time: 'ampm' }
+  { time: 'hours', color: '#ff2972', dot: 'hr_dot', id: 'hh' },
+  { time: 'minutes', color: '#fee800', dot: 'min_dot', id: 'mm' },
+  { time: 'seconds', color: '#04fc43', dot: 'sec_dot', id: 'ss' }
 ]
 
 onMounted(() => {
   setInterval(() => {
+    const hours = document.getElementById('hours')
+    const minutes = document.getElementById('minutes')
+    const seconds = document.getElementById('seconds')
+
     let h = new Date().getHours()
     let m = new Date().getMinutes()
     let s = new Date().getSeconds()
@@ -68,11 +55,11 @@ onMounted(() => {
       h = h - 12
     }
 
-    hours.value!.innerHTML =
+    hours!.innerHTML =
       h < 10 ? '0' + h : h.toString() + '<br><span>Hours</span>'
-    minutes.value!.innerHTML =
+    minutes!.innerHTML =
       m < 10 ? '0' + m : m.toString() + '<br><span>Minutes</span>'
-    seconds.value!.innerHTML =
+    seconds!.innerHTML =
       s < 10 ? '0' + s : s.toString() + '<br><span>Seconds</span>'
     ampm.value!.innerHTML = am.toString()
 
