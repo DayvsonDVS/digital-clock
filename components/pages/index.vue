@@ -56,11 +56,11 @@ onMounted(() => {
     }
 
     hours!.innerHTML =
-      h < 10 ? '0' + h : h.toString() + '<br><span>Hours</span>'
+      (h < 10 ? '0' + h : h.toString()) + '<br><span>Hours</span>'
     minutes!.innerHTML =
-      m < 10 ? '0' + m : m.toString() + '<br><span>Minutes</span>'
+      (m < 10 ? '0' + m : m.toString()) + '<br><span>Minutes</span>'
     seconds!.innerHTML =
-      s < 10 ? '0' + s : s.toString() + '<br><span>Seconds</span>'
+      (s < 10 ? '0' + s : s.toString()) + '<br><span>Seconds</span>'
     ampm.value!.innerHTML = am.toString()
 
     hh!.style.strokeDashoffset = (440 - (440 * h) / 12).toString()
